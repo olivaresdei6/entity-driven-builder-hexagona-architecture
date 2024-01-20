@@ -1,0 +1,25 @@
+import { Module } from '@nestjs/common';
+import {
+    Create$entityNameSingular$Service,
+    Update$entityNameSingular$Service,
+    Delete$entityNameSingular$Service,
+    Restore$entityNameSingular$Service,
+} from './';
+import { $entityNameSingular$RepositoriesModule } from '../../infrastructure/repositories/$entityNameLowerSingular$Repositories.module';
+
+@Module({
+    providers: [
+        Create$entityNameSingular$Service,
+        Update$entityNameSingular$Service,
+        Delete$entityNameSingular$Service,
+        Restore$entityNameSingular$Service,
+    ],
+    imports: [$entityNameSingular$RepositoriesModule],
+    exports: [
+        Create$entityNameSingular$Service,
+        Update$entityNameSingular$Service,
+        Delete$entityNameSingular$Service,
+        Restore$entityNameSingular$Service,
+    ],
+})
+export class $entityNameSingular$Module {}

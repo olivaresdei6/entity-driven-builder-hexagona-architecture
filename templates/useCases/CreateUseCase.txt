@@ -1,0 +1,19 @@
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { Create$entityNameSingular$Service } from '../../domain/services';
+import { I$entityNameSingular$ } from '../../domain/interfaces/models';
+
+@Injectable()
+export class Create$entityNameSingular$UseCase {
+    constructor(private readonly create$entityNameSingular$Service: Create$entityNameSingular$Service) {}
+
+    async execute($entityNameLowerSingular$: I$entityNameSingular$) {
+        try {
+            return await this.create$entityNameSingular$Service.execute($entityNameLowerSingular$);
+        } catch (error) {
+            if (error.code === '23505') {
+                throw new BadRequestException('Ya existe un $entityNameLowerSingular$ con este nombre');
+            }
+            throw new BadRequestException(error.message);
+        }
+    }
+}

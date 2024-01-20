@@ -1,0 +1,30 @@
+import { Controller, Patch, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Auth } from 'src/modules/security/application/decorators/auth.decorator';
+import { VerifyInjectionSQL } from 'src/core/decorators';
+import {
+    ApiBadRequestResponse,
+    ApiInternalServerErrorResponse,
+    ApiNotFoundResponse,
+    ApiResponse,
+    ApiTags,
+    ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+import { Restore$entityNameSingular$UseCase } from '../useCases';
+
+@Controller('$entityNameLowerSingular$')
+@VerifyInjectionSQL()
+@Auth()
+@ApiTags('$entityNameLowerSingular$')
+export class Restore$entityNameSingular$Controller {
+    constructor(private readonly restore$entityNameSingular$UseCase: Restore$entityNameSingular$UseCase) {}
+
+    @ApiResponse({ description: 'The record has been restored successfully.' })
+    @ApiNotFoundResponse()
+    @ApiInternalServerErrorResponse()
+    @ApiBadRequestResponse()
+    @ApiUnauthorizedResponse()
+    @Patch('restore/:id')
+    async execute(@Param('id', ParseUUIDPipe) id: string) {
+        return await this.restore$entityNameSingular$UseCase.execute(id);
+    }
+}

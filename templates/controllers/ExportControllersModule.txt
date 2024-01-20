@@ -1,0 +1,23 @@
+import { Module } from '@nestjs/common';
+import { $entityNameSingular$UseCasesModule } from '../useCases/$entityNameLowerSingular$UseCases.module';
+import {
+    Create$entityNameSingular$Controller,
+    Update$entityNameSingular$Controller,
+    FindBy$entityNameSingular$Controller,
+    FindAll$entityNameSingular$Controller,
+    Delete$entityNameSingular$Controller,
+    Restore$entityNameSingular$Controller,
+} from './';
+
+@Module({
+    controllers: [
+        Create$entityNameSingular$Controller,
+        Update$entityNameSingular$Controller,
+        FindBy$entityNameSingular$Controller,
+        FindAll$entityNameSingular$Controller,
+        Delete$entityNameSingular$Controller,
+        Restore$entityNameSingular$Controller,
+    ],
+    imports: [$entityNameSingular$UseCasesModule],
+})
+export class $entityNameSingular$ControllersModule {}

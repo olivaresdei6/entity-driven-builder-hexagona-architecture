@@ -1,0 +1,15 @@
+import { Injectable } from '@nestjs/common';
+import { Create$entityNameSingular$ } from '../abstract';
+import { I$entityNameSingular$ } from '../interfaces/models';
+import { $entityNameSingular$ } from '../models';
+
+@Injectable()
+export class Create$entityNameSingular$Service {
+    constructor(private readonly create$entityNameSingular$: Create$entityNameSingular$) {}
+
+    async execute($entityNameLowerSingular$Data: I$entityNameSingular$) {
+        const $entityNameLowerSingular$ = new $entityNameSingular$($entityNameLowerSingular$Data);
+        await this.create$entityNameSingular$.execute($entityNameLowerSingular$.get$entityNameSingular$);
+        return $entityNameLowerSingular$.get$entityNameSingular$;
+    }
+}

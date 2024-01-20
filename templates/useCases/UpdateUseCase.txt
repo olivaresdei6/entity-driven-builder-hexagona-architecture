@@ -1,0 +1,19 @@
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { Update$entityNameSingular$Service } from '../../domain/services';
+import { I$entityNameSingular$ } from '../../domain/interfaces/models';
+
+@Injectable()
+export class Update$entityNameSingular$UseCase {
+    constructor(private readonly update$entityNameSingular$Service: Update$entityNameSingular$Service) {}
+
+    async execute($entityNameLowerSingular$: Partial<I$entityNameSingular$>) {
+        try {
+            return await this.update$entityNameSingular$Service.execute($entityNameLowerSingular$);
+        } catch (error) {
+            if (error.code === '23505') {
+                throw new BadRequestException(`Ya existe un $entityNameSingular$ con el mismo nombre`);
+            }
+            throw new BadRequestException(`No se pudo actualizar el$entityNameSingular$`);
+        }
+    }
+}

@@ -1,0 +1,15 @@
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { Restore$entityNameSingular$Service } from '../../domain/services';
+
+@Injectable()
+export class Restore$entityNameSingular$UseCase {
+    constructor(private readonly restore$entityNameSingular$Service: Restore$entityNameSingular$Service) {}
+
+    async execute(id$entityNameSingular$: string) {
+        try {
+            await this.restore$entityNameSingular$Service.execute(id$entityNameSingular$);
+        } catch (error) {
+            throw new BadRequestException('Verify the information sent');
+        }
+    }
+}

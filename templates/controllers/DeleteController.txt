@@ -1,0 +1,30 @@
+import { Controller, Delete, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Auth } from 'src/modules/security/application/decorators/auth.decorator';
+import { VerifyInjectionSQL } from 'src/core/decorators';
+import {
+    ApiBadRequestResponse,
+    ApiInternalServerErrorResponse,
+    ApiNotFoundResponse,
+    ApiResponse,
+    ApiTags,
+    ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+import { Delete$entityNameSingular$UseCase } from '../useCases';
+
+@Controller('$entityNameLowerSingular$')
+@VerifyInjectionSQL()
+@Auth()
+@ApiTags('$entityNameLowerSingular$')
+export class Delete$entityNameSingular$Controller {
+    constructor(private readonly delete$entityNameSingular$UseCase: Delete$entityNameSingular$UseCase) {}
+
+    @ApiResponse({ description: 'The record has been deleted successfully.' })
+    @ApiNotFoundResponse()
+    @ApiInternalServerErrorResponse()
+    @ApiBadRequestResponse()
+    @ApiUnauthorizedResponse()
+    @Delete(':id')
+    async execute(@Param('id', ParseUUIDPipe) id: string) {
+        return await this.delete$entityNameSingular$UseCase.execute(id);
+    }
+}

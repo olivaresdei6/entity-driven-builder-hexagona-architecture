@@ -1,0 +1,20 @@
+import { Injectable } from '@nestjs/common';
+import { FindOne$entityNameSingular$ } from '../../domain/abstract';
+import { Repository } from 'typeorm';
+import { I$entityNameSingular$ } from '../../domain/interfaces/models';
+import { InjectRepository } from '@nestjs/typeorm';
+import { FindOneRepository } from 'src/integrations/dbManager/infrastructure/repositories';
+import { $entityName$Entity } from 'src/integrations/dbManager/infrastructure/entities/$routeEntity$';
+import { TGenericFindOptions } from 'src/integrations/dbManager/domain/types/find';
+
+@Injectable()
+export class FindOne$entityNameSingular$Repository implements FindOne$entityNameSingular$ {
+    private readonly findOneRepository: FindOneRepository<$entityName$Entity>;
+    constructor(@InjectRepository($entityName$Entity) private repository: Repository<$entityName$Entity>) {
+        this.findOneRepository = new FindOneRepository<$entityName$Entity>(this.repository);
+    }
+
+    async execute(options: TGenericFindOptions<I$entityNameSingular$>): Promise<I$entityNameSingular$> {
+        return await this.findOneRepository.execute(options);
+    }
+}

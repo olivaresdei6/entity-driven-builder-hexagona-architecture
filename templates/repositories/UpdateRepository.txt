@@ -1,0 +1,21 @@
+import { Injectable } from '@nestjs/common';
+import { Update$entityNameSingular$ } from '../../domain/abstract';
+import { Repository } from 'typeorm';
+import { I$entityNameSingular$ } from '../../domain/interfaces/models';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UpdateRepository } from 'src/integrations/dbManager/infrastructure/repositories';
+import { $entityName$Entity } from 'src/integrations/dbManager/infrastructure/entities/$routeEntity$';
+import { DeepPartial } from 'src/integrations/dbManager/domain/types/partial';
+
+@Injectable()
+export class Update$entityNameSingular$Repository implements Update$entityNameSingular$ {
+    private updateRepository: UpdateRepository<$entityName$Entity>;
+
+    constructor(@InjectRepository($entityName$Entity) private repository: Repository<$entityName$Entity>) {
+        this.updateRepository = new UpdateRepository<$entityName$Entity>(this.repository, this.repository.manager.connection);
+    }
+
+    async execute($entityNameSingular$Modified: DeepPartial<I$entityNameSingular$>): Promise<void> {
+        await this.updateRepository.execute($entityNameSingular$Modified);
+    }
+}

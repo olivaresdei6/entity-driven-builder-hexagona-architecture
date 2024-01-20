@@ -1,0 +1,23 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { FindOne$entityNameSingular$, Update$entityNameSingular$ } from '../abstract';
+import { $entityNameSingular$ } from '../models';
+
+@Injectable()
+export class Restore$entityNameSingular$Service {
+    constructor(
+        private readonly update$entityNameSingular$: Update$entityNameSingular$,
+        private readonly findOne$entityNameSingular$: FindOne$entityNameSingular$,
+    ) {}
+
+    async execute(id$entityNameSingular$: string) {
+        const $entityNameLowerSingular$Registered = await this.findOne$entityNameSingular$.execute({
+            where: { id: id$entityNameSingular$ },
+        });
+        if (!$entityNameLowerSingular$Registered) {
+            throw new NotFoundException('$entityNameSingular$ not found');
+        }
+        const $entityNameLowerSingular$ = new $entityNameSingular$($entityNameLowerSingular$Registered);
+        $entityNameLowerSingular$.activate();
+        await this.update$entityNameSingular$.execute($entityNameLowerSingular$.get$entityNameSingular$);
+    }
+}

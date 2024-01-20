@@ -1,0 +1,20 @@
+import { Injectable } from '@nestjs/common';
+import { Create$entityNameSingular$ } from '../../domain/abstract';
+import { Repository } from 'typeorm';
+import { I$entityNameSingular$ } from '../../domain/interfaces/models';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateRepository } from 'src/integrations/dbManager/infrastructure/repositories';
+import { $entityName$Entity } from 'src/integrations/dbManager/infrastructure/entities/$routeEntity$';
+
+@Injectable()
+export class Create$entityNameSingular$Repository implements Create$entityNameSingular$ {
+    private createRepository: CreateRepository<$entityName$Entity>;
+
+    constructor(@InjectRepository($entityName$Entity) private repository: Repository<$entityName$Entity>) {
+        this.createRepository = new CreateRepository<$entityName$Entity>(this.repository);
+    }
+
+    async execute($entityNameLowerSingular$: I$entityNameSingular$): Promise<void> {
+        await this.createRepository.execute($entityNameLowerSingular$);
+    }
+}

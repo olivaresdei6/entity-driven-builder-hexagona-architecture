@@ -1,0 +1,34 @@
+import { Controller, Get, Query } from '@nestjs/common';
+import { VerifyInjectionSQL } from 'src/core/decorators';
+import { Auth } from 'src/modules/security/application/decorators/auth.decorator';
+import {
+    ApiBadRequestResponse,
+    ApiInternalServerErrorResponse,
+    ApiNotFoundResponse,
+    ApiQuery,
+    ApiResponse,
+    ApiTags,
+    ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+import { $entityName$Entity } from 'src/integrations/dbManager/infrastructure/entities/$routeEntity$';
+import { FindAll$entityNameSingular$UseCase } from '../useCases';
+
+@Controller('$entityNameLowerSingular$')
+@VerifyInjectionSQL()
+@Auth()
+@ApiTags('$entityNameLowerSingular$')
+export class FindAll$entityNameSingular$Controller {
+    constructor(private readonly findAll$entityNameSingular$UseCase: FindAll$entityNameSingular$UseCase) {}
+
+    @ApiResponse({ description: 'The records have been retrieved successfully.', type: $entityName$Entity, isArray: true })
+    @ApiNotFoundResponse()
+    @ApiInternalServerErrorResponse()
+    @ApiBadRequestResponse()
+    @ApiUnauthorizedResponse()
+    @ApiQuery({ name: 'page', required: false, type: 'number' })
+    @ApiQuery({ name: 'limit', required: false, type: 'number' })
+    @Get('findAll')
+    async execute(@Query('page') page: number, @Query('limit') limit: number) {
+        return await this.findAll$entityNameSingular$UseCase.execute(page, limit);
+    }
+}

@@ -1,0 +1,43 @@
+import { Module } from '@nestjs/common';
+import { Create$entityNameSingular$Repository, FindOne$entityNameSingular$Repository, Update$entityNameSingular$Repository, FindBy$entityNameSingular$Repository } from './';
+import { Create$entityNameSingular$, FindOne$entityNameSingular$, Update$entityNameSingular$, FindBy$entityNameSingular$ } from '../../domain/abstract';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { $entityName$Entity } from 'src/integrations/dbManager/infrastructure/entities/$routeEntity$';
+import { DatabaseModule } from 'src/integrations/dbManager/infrastructure';
+
+@Module({
+    providers: [
+        Create$entityNameSingular$Repository,
+        {
+            provide: Create$entityNameSingular$,
+            useClass: Create$entityNameSingular$Repository,
+        },
+        FindOne$entityNameSingular$Repository,
+        {
+            provide: FindOne$entityNameSingular$,
+            useClass: FindOne$entityNameSingular$Repository,
+        },
+        Update$entityNameSingular$Repository,
+        {
+            provide: Update$entityNameSingular$,
+            useClass: Update$entityNameSingular$Repository,
+        },
+        FindBy$entityNameSingular$Repository,
+        {
+            provide: FindBy$entityNameSingular$,
+            useClass: FindBy$entityNameSingular$Repository,
+        },
+    ],
+    imports: [DatabaseModule, TypeOrmModule.forFeature([$entityName$Entity])],
+    exports: [
+        Create$entityNameSingular$Repository,
+        Create$entityNameSingular$,
+        FindOne$entityNameSingular$Repository,
+        FindOne$entityNameSingular$,
+        Update$entityNameSingular$Repository,
+        Update$entityNameSingular$,
+        FindBy$entityNameSingular$Repository,
+        FindBy$entityNameSingular$,
+    ],
+})
+export class $entityNameSingular$RepositoriesModule {}

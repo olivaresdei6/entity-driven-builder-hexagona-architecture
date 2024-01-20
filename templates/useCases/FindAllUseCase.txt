@@ -1,0 +1,22 @@
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { FindBy$entityNameSingular$ } from '../../domain/abstract';
+import { validatePagination } from 'src/core/helpers';
+
+@Injectable()
+export class FindAll$entityNameSingular$UseCase {
+    constructor(private readonly findBy$entityNameSingular$: FindBy$entityNameSingular$) {}
+
+    async execute(page = 1, limit = 10) {
+        validatePagination(limit, page);
+
+        try {
+            return await this.findBy$entityNameSingular$.execute({
+                where: [],
+                page,
+                limit,
+            });
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+}

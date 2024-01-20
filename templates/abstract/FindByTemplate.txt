@@ -1,0 +1,7 @@
+import { I$entityNameSingular$ } from '../interfaces/models';
+import { TGenericFindOptions } from 'src/integrations/dbManager/domain/types/find';
+import { IPaginatedResponse } from 'src/integrations/dbManager/domain/interfaces/paginated/paginatedResponse.interface';
+
+export abstract class FindBy$entityNameSingular$ {
+    abstract execute(options: TGenericFindOptions<I$entityNameSingular$>): Promise<IPaginatedResponse<I$entityNameSingular$>>;
+}

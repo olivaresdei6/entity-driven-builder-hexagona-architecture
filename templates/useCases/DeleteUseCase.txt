@@ -1,0 +1,15 @@
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { Delete$entityNameSingular$Service } from '../../domain/services';
+
+@Injectable()
+export class Delete$entityNameSingular$UseCase {
+    constructor(private readonly delete$entityNameSingular$Service: Delete$entityNameSingular$Service) {}
+
+    async execute(id$entityNameSingular$: string) {
+        try {
+            await this.delete$entityNameSingular$Service.execute(id$entityNameSingular$);
+        } catch (error) {
+            throw new BadRequestException('Verify the information sent');
+        }
+    }
+}

@@ -1,0 +1,5 @@
+import { I$entityNameSingular$ } from '../interfaces/models';
+
+export abstract class Create$entityNameSingular$ {
+    abstract execute($entityNameLowerSingular$: I$entityNameSingular$): Promise<void>;
+}

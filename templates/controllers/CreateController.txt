@@ -1,0 +1,36 @@
+import { Body, Controller, Post } from '@nestjs/common';
+import { VerifyInjectionSQL } from 'src/core/decorators';
+import {
+    ApiBadRequestResponse,
+    ApiCreatedResponse,
+    ApiInternalServerErrorResponse,
+    ApiNotFoundResponse,
+    ApiTags,
+    ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+import { Create$entityNameSingular$UseCase } from '../useCases';
+import { $entityName$Entity } from 'src/integrations/dbManager/infrastructure/entities/$routeEntity$';
+import { Create$entityNameSingular$Dto } from '../dtos';
+import { Auth } from 'src/modules/security/application/decorators/auth.decorator';
+import { generateUuid } from 'src/core/helpers';
+
+@Controller('$entityNameLowerSingular$')
+@VerifyInjectionSQL()
+@Auth()
+@ApiTags('$entityNameLowerSingular$')
+export class Create$entityNameSingular$Controller {
+    constructor(private readonly create$entityNameSingular$UseCase: Create$entityNameSingular$UseCase) {}
+
+    @ApiCreatedResponse({
+        description: 'The record has been created successfully.',
+        type: $entityName$Entity,
+    })
+    @ApiNotFoundResponse()
+    @ApiInternalServerErrorResponse()
+    @ApiBadRequestResponse()
+    @ApiUnauthorizedResponse()
+    @Post()
+    async execute(@Body() create$entityNameSingular$Dto: Create$entityNameSingular$Dto) {
+        return await this.create$entityNameSingular$UseCase.execute({ ...create$entityNameSingular$Dto, id: generateUuid() });
+    }
+}

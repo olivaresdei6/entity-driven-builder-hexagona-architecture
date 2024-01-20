@@ -1,0 +1,32 @@
+import { Body, Controller, Patch } from '@nestjs/common';
+import { Auth } from 'src/modules/security/application/decorators/auth.decorator';
+import { VerifyInjectionSQL } from 'src/core/decorators';
+import {
+    ApiBadRequestResponse,
+    ApiInternalServerErrorResponse,
+    ApiNotFoundResponse,
+    ApiResponse,
+    ApiTags,
+    ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+import { Update$entityNameSingular$UseCase } from '../useCases';
+import { $entityName$Entity } from 'src/integrations/dbManager/infrastructure/entities/$routeEntity$';
+import { Update$entityNameSingular$Dto } from '../dtos';
+
+@Controller('$entityNameLowerSingular$')
+@VerifyInjectionSQL()
+@Auth()
+@ApiTags('$entityNameLowerSingular$')
+export class Update$entityNameSingular$Controller {
+    constructor(private readonly update$entityNameSingular$UseCase: Update$entityNameSingular$UseCase) {}
+
+    @ApiResponse({ description: 'The record has been updated successfully.', type: $entityName$Entity })
+    @ApiNotFoundResponse()
+    @ApiInternalServerErrorResponse()
+    @ApiBadRequestResponse()
+    @ApiUnauthorizedResponse()
+    @Patch()
+    async execute(@Body() update$entityNameSingular$Dto: Update$entityNameSingular$Dto) {
+        return await this.update$entityNameSingular$UseCase.execute(update$entityNameSingular$Dto);
+    }
+}

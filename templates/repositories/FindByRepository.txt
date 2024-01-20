@@ -1,0 +1,22 @@
+import { Injectable } from '@nestjs/common';
+import { IPaginatedResponse } from 'src/integrations/dbManager/domain/interfaces/paginated/paginatedResponse.interface';
+import { FindBy$entityNameSingular$ } from '../../domain/abstract';
+import { Repository } from 'typeorm';
+import { I$entityNameSingular$ } from '../../domain/interfaces/models';
+import { InjectRepository } from '@nestjs/typeorm';
+import { FindByRepository } from 'src/integrations/dbManager/infrastructure/repositories';
+import { $entityName$Entity } from 'src/integrations/dbManager/infrastructure/entities/$routeEntity$';
+import { TGenericFindOptions } from 'src/integrations/dbManager/domain/types/find';
+
+@Injectable()
+export class FindBy$entityNameSingular$Repository implements FindBy$entityNameSingular$ {
+    private findByRepository: FindByRepository<$entityName$Entity>;
+
+    constructor(@InjectRepository($entityName$Entity) private repository: Repository<$entityName$Entity>) {
+        this.findByRepository = new FindByRepository<$entityName$Entity>(this.repository);
+    }
+
+    async execute(options: TGenericFindOptions<I$entityNameSingular$>): Promise<IPaginatedResponse<I$entityNameSingular$>> {
+        return await this.findByRepository.execute(options);
+    }
+}

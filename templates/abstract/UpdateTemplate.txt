@@ -1,0 +1,6 @@
+import { I$entityNameSingular$ } from '../interfaces/models';
+import { DeepPartial } from 'src/integrations/dbManager/domain/types/partial';
+
+export abstract class Update$entityNameSingular$ {
+    abstract execute($entityNameLowerSingular$Modified: DeepPartial<I$entityNameSingular$>): Promise<void>;
+}
